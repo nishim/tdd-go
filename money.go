@@ -5,4 +5,5 @@ type Dollar struct {
 }
 
 func (d *Dollar) Times(t int) {
+	d.Amount = d.Amount * t
 }
