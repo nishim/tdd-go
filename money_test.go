@@ -13,7 +13,7 @@ func TestMultiplication(t *testing.T) {
 
 	for _, c := range cases {
 		d := Dollar{c.dollar}
-		d.Times{c.times}
+		d.Times(c.times)
 		if d.Amount != c.expected {
 			t.Errorf("expected: %d, actual: %d", c.expected, d.Amount)
 		}
