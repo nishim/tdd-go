@@ -19,3 +19,20 @@ func TestMultiplication(t *testing.T) {
 		}
 	}
 }
+
+func TestEquality(t *testing.T) {
+	cases := []struct {
+		a        Dollar
+		b        Dollar
+		expected bool
+	}{
+		{a: Dollar{5}, b: Dollar{5}, expected: true},
+		{a: Dollar{5}, b: Dollar{6}, expected: false},
+	}
+
+	for _, c := range cases {
+		if (c.a == c.b) != c.expected {
+			t.Errorf("expected: %v, actual: %v", c.expected, (c.a == c.b))
+		}
+	}
+}
