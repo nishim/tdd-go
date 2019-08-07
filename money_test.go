@@ -36,3 +36,21 @@ func TestEquality(t *testing.T) {
 		}
 	}
 }
+
+func TestFrancMultiplication(t *testing.T) {
+	cases := []struct {
+		times    int
+		expected Franc
+	}{
+		{times: 2, expected: NewFranc(10)},
+		{times: 3, expected: NewFranc(15)},
+	}
+
+	five := NewFranc(5)
+	for _, c := range cases {
+		d := five.Times(c.times)
+		if d != c.expected {
+			t.Errorf("expected: %d, actual: %d", c.expected, d)
+		}
+	}
+}
