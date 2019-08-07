@@ -30,11 +30,13 @@ func TestEquality(t *testing.T) {
 		{a: NewDollar(5), b: NewDollar(6), expected: false},
 		{a: NewFranc(5), b: NewFranc(5), expected: true},
 		{a: NewFranc(5), b: NewFranc(6), expected: false},
+		{a: NewDollar(5), b: NewFranc(5), expected: false},
 	}
 
 	for _, c := range cases {
-		if (c.a == c.b) != c.expected {
-			t.Errorf("expected: %v, actual: %v", c.expected, (c.a == c.b))
+		b := Equals(c.a, c.b)
+		if b != c.expected {
+			t.Errorf("expected: %v, actual: %v, a:%v, b:%v", c.expected, b, c.a, c.b)
 		}
 	}
 }

@@ -4,6 +4,10 @@ type Money interface {
 	GetAmount() int
 }
 
+func Equals(a, b Money) bool {
+	return a.GetAmount() == b.GetAmount()
+}
+
 type Dollar struct {
 	amount int
 }
