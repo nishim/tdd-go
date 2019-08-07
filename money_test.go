@@ -22,12 +22,14 @@ func TestMultiplication(t *testing.T) {
 
 func TestEquality(t *testing.T) {
 	cases := []struct {
-		a        Dollar
-		b        Dollar
+		a        Money
+		b        Money
 		expected bool
 	}{
 		{a: NewDollar(5), b: NewDollar(5), expected: true},
 		{a: NewDollar(5), b: NewDollar(6), expected: false},
+		{a: NewFranc(5), b: NewFranc(5), expected: true},
+		{a: NewFranc(5), b: NewFranc(6), expected: false},
 	}
 
 	for _, c := range cases {
