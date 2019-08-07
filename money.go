@@ -1,11 +1,14 @@
 package money
 
+import "reflect"
+
 type Money interface {
 	GetAmount() int
 }
 
 func Equals(a, b Money) bool {
-	return a.GetAmount() == b.GetAmount()
+	return a.GetAmount() == b.GetAmount() &&
+		reflect.TypeOf(a) == reflect.TypeOf(b)
 }
 
 type Dollar struct {
