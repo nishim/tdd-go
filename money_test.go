@@ -5,7 +5,7 @@ import "testing"
 func TestMultiplication(t *testing.T) {
 	cases := []struct {
 		times    int
-		expected Dollar
+		expected Money
 	}{
 		{times: 2, expected: NewDollar(10)},
 		{times: 3, expected: NewDollar(15)},
@@ -44,7 +44,7 @@ func TestEquality(t *testing.T) {
 func TestFrancMultiplication(t *testing.T) {
 	cases := []struct {
 		times    int
-		expected Franc
+		expected Money
 	}{
 		{times: 2, expected: NewFranc(10)},
 		{times: 3, expected: NewFranc(15)},

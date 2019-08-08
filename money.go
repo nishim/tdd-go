@@ -4,6 +4,7 @@ import "reflect"
 
 type Money interface {
 	GetAmount() int
+	Times(int) Money
 }
 
 func Equals(a, b Money) bool {
@@ -11,35 +12,35 @@ func Equals(a, b Money) bool {
 		reflect.TypeOf(a) == reflect.TypeOf(b)
 }
 
-type Dollar struct {
+type dollar struct {
 	amount int
 }
 
-func NewDollar(amount int) Dollar {
-	return Dollar{amount}
+func NewDollar(amount int) Money {
+	return dollar{amount}
 }
 
-func (d Dollar) Times(t int) Dollar {
-	return Dollar{d.amount * t}
+func (d dollar) Times(t int) Money {
+	return dollar{d.amount * t}
 }
 
-func (d Dollar) GetAmount() int {
+func (d dollar) GetAmount() int {
 	return d.amount
 }
 
 // Franc.
-type Franc struct {
+type franc struct {
 	amount int
 }
 
-func NewFranc(amount int) Franc {
-	return Franc{amount}
+func NewFranc(amount int) Money {
+	return franc{amount}
 }
 
-func (d Franc) Times(t int) Franc {
-	return Franc{d.amount * t}
+func (d franc) Times(t int) Money {
+	return franc{d.amount * t}
 }
 
-func (d Franc) GetAmount() int {
+func (d franc) GetAmount() int {
 	return d.amount
 }
