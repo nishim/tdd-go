@@ -32,7 +32,7 @@ func TestEquality(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		b := Equals(c.a, c.b)
+		b := c.a.Equals(c.b)
 		if b != c.expected {
 			t.Errorf("expected: %v, actual: %v, a:%v, b:%v", c.expected, b, c.a, c.b)
 		}

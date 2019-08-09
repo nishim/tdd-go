@@ -13,8 +13,8 @@ func NewFranc(amount int) Money {
 	return Money{amount, "CHF"}
 }
 
-func Equals(a, b Money) bool {
-	return a.amount == b.amount && a.currency == b.currency
+func (m Money) Equals(a Money) bool {
+	return m.amount == a.amount && m.currency == a.currency
 }
 
 func (m Money) Times(t int) Money {
