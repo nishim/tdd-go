@@ -58,3 +58,19 @@ func TestFrancMultiplication(t *testing.T) {
 		}
 	}
 }
+
+func TestCurrenvy(t *testing.T) {
+	cases := []struct {
+		currency string
+		money    Money
+	}{
+		{currency: "USD", money: NewDollar(1)},
+		{currency: "CHF", money: NewFranc(1)},
+	}
+
+	for _, c := range cases {
+		if c.currency != c.money.Currency() {
+			t.Errorf("expected: %s, actual: %s", c.currency, c.money.Currency())
+		}
+	}
+}

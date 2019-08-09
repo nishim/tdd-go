@@ -5,6 +5,7 @@ import "reflect"
 type Money interface {
 	GetAmount() int
 	Times(int) Money
+	Currency() string
 }
 
 func Equals(a, b Money) bool {
@@ -28,6 +29,10 @@ func (d dollar) GetAmount() int {
 	return d.amount
 }
 
+func (d dollar) Currency() string {
+	return "USD"
+}
+
 // Franc.
 type franc struct {
 	amount int
@@ -43,4 +48,8 @@ func (d franc) Times(t int) Money {
 
 func (d franc) GetAmount() int {
 	return d.amount
+}
+
+func (d franc) Currency() string {
+	return "CHF"
 }
