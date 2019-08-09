@@ -15,7 +15,7 @@ func TestMultiplication(t *testing.T) {
 	for _, c := range cases {
 		d := five.Times(c.times)
 		if d != c.expected {
-			t.Errorf("expected: %d, actual: %d", c.expected, d)
+			t.Errorf("expected: %v, actual: %v", c.expected, d)
 		}
 	}
 }
@@ -54,7 +54,7 @@ func TestFrancMultiplication(t *testing.T) {
 	for _, c := range cases {
 		d := five.Times(c.times)
 		if d != c.expected {
-			t.Errorf("expected: %d, actual: %d", c.expected, d)
+			t.Errorf("expected: %v, actual: %v", c.expected, d)
 		}
 	}
 }
