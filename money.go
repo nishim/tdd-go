@@ -22,7 +22,7 @@ func NewDollar(amount int) Money {
 }
 
 func (d dollar) Times(t int) Money {
-	return dollar{d.amount * t}
+	return NewDollar(d.amount * t)
 }
 
 func (d dollar) GetAmount() int {
@@ -43,7 +43,7 @@ func NewFranc(amount int) Money {
 }
 
 func (d franc) Times(t int) Money {
-	return franc{d.amount * t}
+	return NewFranc(d.amount * t)
 }
 
 func (d franc) GetAmount() int {
