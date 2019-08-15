@@ -77,10 +77,20 @@ func TestSimpleAdditiom(t *testing.T) {
 func TestPlusReturnsSum(t *testing.T) {
 	five := NewDollar(5)
 	result := five.Plus(five).(Sum)
-	if five != result.augend {
+	if !five.Equals(result.augend) {
 		t.Errorf("augend expected: %v, actual: %v", five, result.augend)
 	}
-	if five != result.addend {
+	if !five.Equals(result.addend) {
 		t.Errorf("addend expected: %v, actual: %v", five, result.addend)
+	}
+}
+
+func TestReduceSum(t *testing.T) {
+	sum := Sum{NewDollar(3), NewDollar(4)}
+	bank := Bank{}
+	result := bank.Reduce(sum, "USD")
+	seven := NewDollar(7)
+	if !seven.Equals(result) {
+		t.Errorf("expected: %v, actual:%v", seven, result)
 	}
 }
