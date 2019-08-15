@@ -1,8 +1,25 @@
 package money
 
+type Bank struct{}
+
+func (b *Bank) Reduce(source Expression, currency string) Money {
+	return NewDollar(10)
+}
+
+type Expression interface{}
+
+type Sum struct {
+	augend Money
+	addend Money
+}
+
 type Money struct {
 	amount   int
 	currency string
+}
+
+func New(amount int, currency string) Money {
+	return Money{amount, currency}
 }
 
 func NewDollar(amount int) Money {
@@ -27,4 +44,8 @@ func (m Money) GetAmount() int {
 
 func (m Money) Currency() string {
 	return m.currency
+}
+
+func (m Money) Plus(a Money) Expression {
+	return Sum{m, a}
 }

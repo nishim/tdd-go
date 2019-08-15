@@ -54,3 +54,33 @@ func TestCurrenvy(t *testing.T) {
 		}
 	}
 }
+
+func TestSimpleAdditiom(t *testing.T) {
+	cases := []struct {
+		m1       Money
+		m2       Money
+		expected Money
+	}{
+		{m1: NewDollar(5), m2: NewDollar(5), expected: NewDollar(10)},
+	}
+
+	bank := &Bank{}
+	for _, c := range cases {
+		sum := c.m1.Plus(c.m2)
+		reduced := bank.Reduce(sum, "USD")
+		if !reduced.Equals(c.expected) {
+			t.Errorf("expected: %v, actual: %v", c.expected, sum)
+		}
+	}
+}
+
+func TestPlusReturnsSum(t *testing.T) {
+	five := NewDollar(5)
+	result := five.Plus(five).(Sum)
+	if five != result.augend {
+		t.Errorf("augend expected: %v, actual: %v", five, result.augend)
+	}
+	if five != result.addend {
+		t.Errorf("addend expected: %v, actual: %v", five, result.addend)
+	}
+}
