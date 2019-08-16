@@ -35,12 +35,11 @@ type Expression interface {
 }
 
 type Sum struct {
-	augend Money
-	addend Money
+	augend, addend Expression
 }
 
 func (s Sum) Reduce(bank *Bank, to string) Money {
-	amount := s.augend.GetAmount() + s.addend.GetAmount()
+	amount := s.augend.Reduce(bank, to).GetAmount() + s.addend.Reduce(bank, to).GetAmount()
 	return New(amount, to)
 }
 
@@ -65,7 +64,7 @@ func (m Money) Equals(a Money) bool {
 	return m.amount == a.amount && m.currency == a.currency
 }
 
-func (m Money) Times(t int) Money {
+func (m Money) Times(t int) Expression {
 	return Money{m.amount * t, m.currency}
 }
 
@@ -77,7 +76,7 @@ func (m Money) Currency() string {
 	return m.currency
 }
 
-func (m Money) Plus(a Money) Expression {
+func (m Money) Plus(a Expression) Expression {
 	return Sum{m, a}
 }
 

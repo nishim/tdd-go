@@ -74,17 +74,6 @@ func TestSimpleAdditiom(t *testing.T) {
 	}
 }
 
-func TestPlusReturnsSum(t *testing.T) {
-	five := NewDollar(5)
-	result := five.Plus(five).(Sum)
-	if !five.Equals(result.augend) {
-		t.Errorf("augend expected: %v, actual: %v", five, result.augend)
-	}
-	if !five.Equals(result.addend) {
-		t.Errorf("addend expected: %v, actual: %v", five, result.addend)
-	}
-}
-
 func TestIdentityRate(t *testing.T) {
 	bank := NewBank()
 	rate := bank.rate("USD", "USD")
@@ -120,5 +109,19 @@ func TestReduceMoneyDifferencCurrency(t *testing.T) {
 
 	if !oned.Equals(result) {
 		t.Errorf("expected: %v, actual:%v", oned, result)
+	}
+}
+
+func TestMixedAddition(t *testing.T) {
+	fiveBucks := NewDollar(5)
+	tenFrance := NewFranc(10)
+	bank := NewBank()
+	bank.AddRate("CHF", "USD", 2)
+	result := bank.Reduce(fiveBucks.Plus(tenFrance), "USD")
+
+	tenBucks := NewDollar(10)
+
+	if !result.Equals(tenBucks) {
+		t.Errorf("expected: %v, actual: %v", tenBucks, result)
 	}
 }
