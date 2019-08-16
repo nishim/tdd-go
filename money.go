@@ -1,25 +1,21 @@
 package money
 
-import "reflect"
-
 type Bank struct{}
 
 func (b *Bank) Reduce(source Expression, currency string) Money {
-	if reflect.TypeOf(source).Name() == "Money" {
-		return source.(Money)
-	}
-	sum := source.(Sum)
-	return sum.Reduce(currency)
+	return source.Reduce(currency)
 }
 
-type Expression interface{}
+type Expression interface {
+	Reduce(to string) Money
+}
 
 type Sum struct {
 	augend Money
 	addend Money
 }
 
-func (s *Sum) Reduce(to string) Money {
+func (s Sum) Reduce(to string) Money {
 	amount := s.augend.GetAmount() + s.addend.GetAmount()
 	return New(amount, to)
 }
@@ -59,4 +55,8 @@ func (m Money) Currency() string {
 
 func (m Money) Plus(a Money) Expression {
 	return Sum{m, a}
+}
+
+func (m Money) Reduce(to string) Money {
+	return m
 }
