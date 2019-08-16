@@ -103,3 +103,14 @@ func TestReduceMoney(t *testing.T) {
 		t.Errorf("expected: %v, actual:%v", one, result)
 	}
 }
+
+func TestReduceMoneyDifferencCurrency(t *testing.T) {
+	bank := Bank{}
+	bank.AddRate("CHF", "USD", 2)
+	result := bank.Reduce(NewFranc(2), "USD")
+	oned := NewDollar(1)
+
+	if !oned.Equals(result) {
+		t.Errorf("expected: %v, actual:%v", oned, result)
+	}
+}

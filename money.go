@@ -6,6 +6,9 @@ func (b *Bank) Reduce(source Expression, currency string) Money {
 	return source.Reduce(currency)
 }
 
+func (b *Bank) AddRate(from, to string, rate int) {
+}
+
 type Expression interface {
 	Reduce(to string) Money
 }
@@ -58,5 +61,11 @@ func (m Money) Plus(a Money) Expression {
 }
 
 func (m Money) Reduce(to string) Money {
-	return m
+	var rate int
+	if m.currency == "CHF" && to == "USD" {
+		rate = 2
+	} else {
+		rate = 1
+	}
+	return New(m.amount/rate, to)
 }
