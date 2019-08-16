@@ -64,7 +64,7 @@ func TestSimpleAdditiom(t *testing.T) {
 		{m1: NewDollar(5), m2: NewDollar(5), expected: NewDollar(10)},
 	}
 
-	bank := &Bank{}
+	bank := NewBank()
 	for _, c := range cases {
 		sum := c.m1.Plus(c.m2)
 		reduced := bank.Reduce(sum, "USD")
@@ -85,9 +85,17 @@ func TestPlusReturnsSum(t *testing.T) {
 	}
 }
 
+func TestIdentityRate(t *testing.T) {
+	bank := NewBank()
+	rate := bank.rate("USD", "USD")
+	if 1 != rate {
+		t.Errorf("expected: %d, actual: %d", 1, rate)
+	}
+}
+
 func TestReduceSum(t *testing.T) {
 	sum := Sum{NewDollar(3), NewDollar(4)}
-	bank := Bank{}
+	bank := NewBank()
 	result := bank.Reduce(sum, "USD")
 	seven := NewDollar(7)
 	if !seven.Equals(result) {
@@ -96,7 +104,7 @@ func TestReduceSum(t *testing.T) {
 }
 
 func TestReduceMoney(t *testing.T) {
-	bank := Bank{}
+	bank := NewBank()
 	result := bank.Reduce(NewDollar(1), "USD")
 	one := NewDollar(1)
 	if !one.Equals(result) {
@@ -105,7 +113,7 @@ func TestReduceMoney(t *testing.T) {
 }
 
 func TestReduceMoneyDifferencCurrency(t *testing.T) {
-	bank := Bank{}
+	bank := NewBank()
 	bank.AddRate("CHF", "USD", 2)
 	result := bank.Reduce(NewFranc(2), "USD")
 	oned := NewDollar(1)

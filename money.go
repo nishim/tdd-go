@@ -1,16 +1,37 @@
 package money
 
-type Bank struct{}
+type pair struct {
+	from, to string
+}
+
+type Bank struct {
+	rates map[pair]int
+}
+
+func NewBank() *Bank {
+	bank := Bank{rates: make(map[pair]int)}
+	return &bank
+}
 
 func (b *Bank) Reduce(source Expression, currency string) Money {
-	return source.Reduce(currency)
+	return source.Reduce(b, currency)
 }
 
 func (b *Bank) AddRate(from, to string, rate int) {
+	pair := pair{from, to}
+	b.rates[pair] = rate
+}
+
+func (b *Bank) rate(from, to string) int {
+	if from == to {
+		return 1
+	}
+	pair := pair{from, to}
+	return b.rates[pair]
 }
 
 type Expression interface {
-	Reduce(to string) Money
+	Reduce(bank *Bank, to string) Money
 }
 
 type Sum struct {
@@ -18,7 +39,7 @@ type Sum struct {
 	addend Money
 }
 
-func (s Sum) Reduce(to string) Money {
+func (s Sum) Reduce(bank *Bank, to string) Money {
 	amount := s.augend.GetAmount() + s.addend.GetAmount()
 	return New(amount, to)
 }
@@ -60,12 +81,7 @@ func (m Money) Plus(a Money) Expression {
 	return Sum{m, a}
 }
 
-func (m Money) Reduce(to string) Money {
-	var rate int
-	if m.currency == "CHF" && to == "USD" {
-		rate = 2
-	} else {
-		rate = 1
-	}
+func (m Money) Reduce(bank *Bank, to string) Money {
+	rate := bank.rate(m.currency, to)
 	return New(m.amount/rate, to)
 }
