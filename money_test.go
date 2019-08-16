@@ -94,3 +94,12 @@ func TestReduceSum(t *testing.T) {
 		t.Errorf("expected: %v, actual:%v", seven, result)
 	}
 }
+
+func TestReduceMoney(t *testing.T) {
+	bank := Bank{}
+	result := bank.Reduce(NewDollar(1), "USD")
+	one := NewDollar(1)
+	if !one.Equals(result) {
+		t.Errorf("expected: %v, actual:%v", one, result)
+	}
+}
